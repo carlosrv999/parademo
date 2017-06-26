@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -44,7 +45,8 @@ import { ServicioComponent } from './servicios/lista-servicios/servicio/servicio
     BrowserModule,
     HttpModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ModalModule.forRoot()
   ],
   providers: [
     CocheraService, 

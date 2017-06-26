@@ -6,14 +6,11 @@ import { Injectable } from '@angular/core';
 import { GeoPoint } from './../models/geoPoint';
 import { Cochera } from './../models/cochera';
 import { Empleado } from "app/models/empleado";
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
 
 import 'rxjs/Rx';
 
 @Injectable()
 export class CocheraService {
-  public obsCocheras: Observable<Cochera[]>;
 
   constructor(private http: Http,
               private empleadoService: EmpleadoService) {

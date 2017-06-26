@@ -3,19 +3,19 @@
     <h4>Nueva Cochera</h4>
   </div>
   <div class="panel-body">
-    <form [formGroup]="nuevaCochera">
+    <form [formGroup]="cocheraForm" novalidate (ngSubmit)="onSubmit(cocheraForm)">
       <div class="form-group row">
         <div class="form-group col-md-6">
           <div class="row">
             <label for="inputNombre" class="col-sm-3 col-form-label">Nombre:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+              <input type="text" formControlName="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
             </div>
           </div>
           <div class="row">
             <label for="inputDireccion" class="col-sm-3 col-form-label">Direccion:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputDireccion" placeholder="Direccion">
+              <input type="text" formControlName="direccion" class="form-control" id="inputDireccion" placeholder="Direccion">
             </div>
           </div>
           <div class="row">
@@ -35,21 +35,28 @@
           <div class="row">
             <label for="inputCapacidad" class="col-sm-3 col-form-label">Capacidad:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputCapacidad" placeholder="Capacidad Maxima">
+              <input type="text" formControlName="capacidad" class="form-control" id="inputCapacidad" placeholder="Capacidad Maxima">
             </div>
           </div>
           <div class="row">
             <label for="inputTelefono" class="col-sm-3 col-form-label">Telefono:</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputTelefono" placeholder="Telefono">
+              <input type="text" formControlName="telefono" class="form-control" id="inputTelefono" placeholder="Telefono">
             </div>
           </div>
           <div class="row">
             <label for="inputEmpleado" class="col-sm-3 col-form-label">Empleado Principal:</label>
             <div class="col-sm-9">
-              <select id="inputEmpleado" class="form-control">
-                <option>Disabled select</option>
+              <select id="inputEmpleado" formControlName="empleado" class="form-control">
+                <option value="0">Seleccionar</option>
+                <option *ngFor="let empleado of empleados" [ngValue]="empleado.id">{{ empleado.nombres }} {{ empleado.apellido_pat }} {{ empleado.apellido_mat }}</option>
               </select>
+            </div>
+          </div>
+          <div class="row" formArrayName="servicios">
+            <label for="inputPrecio" class="col-sm-3 col-form-label">Precio de Alquiler:</label>
+            <div class="col-sm-9" formGroupName="0">
+              <input type="text" class="form-control" formControlName="precio" id="inputPrecio" placeholder="Precio">
             </div>
           </div>
         </div>
@@ -57,39 +64,82 @@
           <div class="row">
             <label for="inputCorreo" class="col-sm-5 col-form-label">Correo de Recuperacion:</label>
             <div class="col-sm-7">
-              <input type="text" class="form-control" id="inputCorreo" placeholder="Correo">
+              <input type="text" formControlName="email" class="form-control" id="inputCorreo" placeholder="Correo">
             </div>
           </div>
           <div class="row">
             <label for="inputUsername" class="col-sm-5 col-form-label">Nombre de Usuario:</label>
             <div class="col-sm-7">
-              <input type="text" class="form-control" id="inputUsername" placeholder="Nombre de Usuario">
+              <input type="text" formControlName="username" class="form-control" id="inputUsername" placeholder="Nombre de Usuario">
             </div>
           </div>
           <div class="row">
             <label for="inputPassword1" class="col-sm-5 col-form-label">Password:</label>
             <div class="col-sm-7">
-              <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+              <input type="password" formControlName="password1" class="form-control" id="inputPassword1" placeholder="Password">
             </div>
           </div>
           <div class="row">
             <label for="inputPassword2" class="col-sm-5 col-form-label">Repita su Password:</label>
             <div class="col-sm-7">
-              <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+              <input type="password" formControlName="password2" class="form-control" id="inputPassword2" placeholder="Password">
             </div>
           </div>
           <div class="row">
             <label class="col-sm-5 col-form-label">Servicios:</label>
             <div class="col-sm-7">
-              <button type="button" class="btn btn-primary btn-sm btn-block pull-right">Agregar Servicios</button>
+              <button type="button" class="btn btn-primary btn-sm btn-block pull-right" (click)="staticModal.show()">Agregar Servicios</button>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-7 pull-right" style="padding-top: 45px;">
-              <button type="button" class="btn btn-success btn-lg btn-block pull-right">Crear Cochera</button>
+              <button type="submit" [disabled]="!cocheraForm.valid" class="btn btn-success btn-lg btn-block pull-right">Crear Cochera</button>
             </div>
             <div class="col-sm-7 pull-right" style="padding-top: 10px;">
               <button type="button" class="btn btn-danger btn-lg btn-block pull-right" [routerLink]="['/cocheras']">Cancelar</button>
+            </div>
+          </div>
+          <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+              tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title pull-left">Agregar Servicios</h4>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-sm-6 form-inline" style="margin-left:10px;" *ngFor="let tipoServicio of tipoServicios; let i = index">
+                        <div class="checkbox">
+                          <input type="checkbox" [checked]="activatedServ[i]" (change)="onChange(i, tipoServicio)">
+                          <label>{{ tipoServicio.nombre }}</label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row" formArrayName="servicios">
+                      <div class="col-sm-6 form-inline" style="margin-left:10px;" *ngFor="let serv of cocheraForm.controls.servicios.controls | slice:1; let i = index">
+                        <div [formGroupName]="i+1">
+                          <div class="col">
+                            <label>{{ cocheraForm.controls.servicios.controls[i+1].value.nombre }}</label>
+                          </div>
+                          <div class="col">
+                            <label>Precio:</label>
+                            <input type="text" class="form-control" formControlName="precio">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" (click)="staticModal.hide()">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -97,3 +147,5 @@
     </form>
   </div>
 </div>
+
+<button class="btn btn-primary" (click)="onShowForm()">mostrar form</button>

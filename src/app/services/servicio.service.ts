@@ -1,4 +1,8 @@
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import { Servicio } from './../models/servicio';
+
+@Injectable()
 export class ServicioService {
   private servicios: Servicio[] = [
     new Servicio('1', '1', '1', 5, true, 'Alquiler de Cupo'),
@@ -13,6 +17,12 @@ export class ServicioService {
       }
     }
     return null;
+  }
+
+  constructor(private http: Http) {}
+
+  getServiciosPorCochera(id: string) {
+    return this.http.get('http://localhost:3000/serviciosPorCochera?idCochera='+id);
   }
 
   getServicios(): Servicio[] {

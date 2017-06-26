@@ -16,7 +16,6 @@ export class ListaEmpleadosComponent implements OnInit {
 
   ngOnInit() {
     this.formBuscar = new FormGroup({});
-    this.empleados = this.empleadoService.getEmpleados();
   }
 
 }
