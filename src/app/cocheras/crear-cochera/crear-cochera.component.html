@@ -1,0 +1,99 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4>Nueva Cochera</h4>
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="nuevaCochera">
+      <div class="form-group row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label for="inputNombre" class="col-sm-3 col-form-label">Nombre:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputDireccion" class="col-sm-3 col-form-label">Direccion:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputDireccion" placeholder="Direccion">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputDireccion" class="col-sm-3 col-form-label">Coordenadas:</label>
+            <div class="col-sm-9">
+              <div class="col-sm-7">
+                <p>Latitud: </p>
+                <p>Longitud: </p>
+              </div>
+              <div class="col-sm-5 pull-right">
+                <button class="btn btn-success btn-lg btn-block">
+                  Seleccionar
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputCapacidad" class="col-sm-3 col-form-label">Capacidad:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputCapacidad" placeholder="Capacidad Maxima">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputTelefono" class="col-sm-3 col-form-label">Telefono:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="inputTelefono" placeholder="Telefono">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmpleado" class="col-sm-3 col-form-label">Empleado Principal:</label>
+            <div class="col-sm-9">
+              <select id="inputEmpleado" class="form-control">
+                <option>Disabled select</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label for="inputCorreo" class="col-sm-5 col-form-label">Correo de Recuperacion:</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" id="inputCorreo" placeholder="Correo">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputUsername" class="col-sm-5 col-form-label">Nombre de Usuario:</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" id="inputUsername" placeholder="Nombre de Usuario">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputPassword1" class="col-sm-5 col-form-label">Password:</label>
+            <div class="col-sm-7">
+              <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputPassword2" class="col-sm-5 col-form-label">Repita su Password:</label>
+            <div class="col-sm-7">
+              <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-sm-5 col-form-label">Servicios:</label>
+            <div class="col-sm-7">
+              <button type="button" class="btn btn-primary btn-sm btn-block pull-right">Agregar Servicios</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-7 pull-right" style="padding-top: 45px;">
+              <button type="button" class="btn btn-success btn-lg btn-block pull-right">Crear Cochera</button>
+            </div>
+            <div class="col-sm-7 pull-right" style="padding-top: 10px;">
+              <button type="button" class="btn btn-danger btn-lg btn-block pull-right" [routerLink]="['/cocheras']">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

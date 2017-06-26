@@ -1,0 +1,117 @@
+<div class="panel panel-primary">
+  <div class="panel-heading clearfix">
+    <h4 class="panel-title pull-left" style="padding-top: 7.5px;">{{ cochera.nombre }}</h4>
+    <button class="btn btn-success pull-right" (click)="onEditMode()">Editar Cochera</button>
+  </div>
+  <div class="panel panel-body">
+    <form [formGroup]="cocheraForm">
+      <div class="form-group row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label for="inputNombre" class="col-sm-3 col-form-label">Nombre:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputDireccion" class="col-sm-3 col-form-label">Direccion:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="direccion" class="form-control" id="inputDireccion" placeholder="Direccion">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-sm-3 col-form-label">Coordenadas:</label>
+            <div class="col-sm-9">
+              <div class="col-sm-7 pull-left">
+                <p>Latitud: {{ cochera.geoPoint.lat }}</p>
+                <p>Longitud: {{ cochera.geoPoint.lng }}</p>
+              </div>
+              <div class="col-sm-5 pull-right">
+                <button style="margin-top: 5px;" class="btn btn-success btn-xs btn-block">
+                  Ver Mapa
+                </button>
+                <button class="btn btn-primary btn-xs btn-block" [disabled]="cocheraForm.disabled">
+                  Editar Coordenadas
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputTelefono" class="col-sm-3 col-form-label">Telefono:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="telefono" class="form-control" id="inputTelefono" placeholder="Telefono">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputEmpleado" class="col-sm-3 col-form-label">Empleado Asignado:</label>
+            <div class="col-sm-9">
+              <select id="inputEmpleado" formControlName="empleado" class="form-control">
+                <option value="0">Seleccionar</option>
+                <option *ngFor="let empleado of empleados" [ngValue]="empleado.id">{{ empleado.nombres }} {{ empleado.apellido_pat }} {{ empleado.apellido_mat }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label for="inputCapacidad" class="col-sm-5 col-form-label">Estado de la cochera:</label>
+            <div class="col-sm-7">
+              <label class="switch pull-right">
+                <input type="checkbox" formControlName="estado">
+                <div class="slider round"></div>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputCapacidad" class="col-sm-5 col-form-label">Capacidad:</label>
+            <div class="col-sm-7">
+              <input type="text" formControlName="capacidad" class="form-control" id="inputCapacidad" placeholder="Capacidad">
+            </div>
+          </div>
+          <div class="row">
+            <label for="username" class="col-sm-5 col-form-label">Nombre de Usuario:</label>
+            <div class="col-sm-7">
+              <input type="text" formControlName="username" class="form-control" id="username" placeholder="Nombre de Usuario">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-sm-5 col-form-label">Contrasena:</label>
+            <div class="col-sm-7">
+              <button type="button" class="btn btn-primary pull-right" [disabled]="cocheraForm.disabled">Cambiar</button>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-md-4 pull-right" *ngIf="cocheraForm.enabled">
+              <button type="button" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-success">Guardar</button>
+              <button type="button" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-danger" (click)="onCancelar()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

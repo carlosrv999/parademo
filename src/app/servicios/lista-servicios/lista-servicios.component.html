@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <button class="btn btn-primary btn-lg" [routerLink]="['/servicios/crear']">Nuevo Servicio</button>
+    <form [formGroup]="formBuscar" class="navbar-form navbar-right" style="margin-right: 1px;">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
+    </form>
+  </div>
+  <div class="panel-body">
+    <app-servicio
+      *ngFor="let servicio of servicios; let i = index"
+      [servicio]="servicio"
+      [index]="i"></app-servicio>
+  </div>
+</div>
