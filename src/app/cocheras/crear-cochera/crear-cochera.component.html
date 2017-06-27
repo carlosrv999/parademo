@@ -27,14 +27,22 @@
           <div class="row">
             <label for="inputDireccion" class="col-sm-3 col-form-label">Coordenadas:</label>
             <div class="col-sm-9">
-              <div class="col-sm-7">
-                <p>Latitud: </p>
-                <p>Longitud: </p>
+              <div class="row">
+                <div class="col-sm-7">
+                  <p>Latitud: {{marker?.lat}} </p>
+                  <p>Longitud: {{marker?.lng}} </p>
+                </div>
+                <div class="col-sm-5 pull-right">
+                  <button type="button" class="btn btn-success btn-lg btn-block" (click)="staticModal2.show()">
+                    Seleccionar
+                  </button>
+                </div>
               </div>
-              <div class="col-sm-5 pull-right">
-                <button type="button" class="btn btn-success btn-lg btn-block">
-                  Seleccionar
-                </button>
+              <div class="row" *ngIf="tooltip">
+                <div class="col-sm-12">
+                  <span 
+                    class="help-block">No olvide seleccionar las coordenadas!</span>
+                </div>
               </div>
             </div>
           </div>
@@ -170,8 +178,32 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" (click)="staticModal.hide()">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-primary" (click)="staticModal.hide()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal" bsModal #staticModal2="bs-modal" [config]="{backdrop: 'static'}" (onShow)="resize($event)"
+              tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title pull-left">Agregar Servicios</h4>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal2.hide()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <!-- this creates a google map on the page with the given lat/lng from -->
+                  <!-- the component as the initial center of the map: -->
+                  <div class="container">
+                    <agm-map #varName [latitude]="lima.lat" [longitude]="lima.lng" [zoom]="12" (mapClick)="handleMapClick($event)">
+                      <agm-marker *ngIf="marker" [latitude]="marker.lat" [longitude]="marker.lng"></agm-marker>
+                    </agm-map>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" (click)="staticModal2.hide()">Close</button>
                 </div>
               </div>
             </div>
@@ -181,5 +213,3 @@
     </form>
   </div>
 </div>
-
-<button class="btn btn-primary" (click)="onShowForm()">mostrar form</button>

@@ -1,3 +1,5 @@
+import { AppUtil } from './../../../assets/application-util';
+import { GeoPoint } from './../../models/geoPoint';
 import { CocheraService } from './../../services/cochera.service';
 import { Observable } from 'rxjs/Observable';
 import { Empleado } from 'app/models/empleado';
@@ -9,14 +11,20 @@ import { Servicio } from './../../models/servicio';
 import { Cochera } from './../../models/cochera';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators, FormBuilder, AbstractControl } from '@angular/forms';
+import { AgmMap } from '@agm/core';
 
 @Component({
   selector: 'app-crear-cochera',
   templateUrl: './crear-cochera.component.html',
-  styleUrls: ['./crear-cochera.component.css']
+  styleUrls: ['./crear-cochera.component.css'],
 })
 export class CrearCocheraComponent implements OnInit {
+  title: string = 'My first AGM project';
+  lima: GeoPoint = AppUtil.LIMA_GEOPOINT;
+  marker: GeoPoint;
+  @ViewChild('varName') map: AgmMap;
   public cocheraForm: FormGroup;
+  tooltip: boolean = false;
   tipoServicios: TipoServicio[] = [];
   activatedServ: boolean[] = [];
   servicios: Servicio[];
@@ -29,7 +37,6 @@ export class CrearCocheraComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit() {
-    
     this.createForm();
 
     this.tipoServicioService.getTipoServicios().subscribe(
@@ -53,6 +60,12 @@ export class CrearCocheraComponent implements OnInit {
           console.log(error)
         }
       );
+    setTimeout(()=>{
+      if(!this.cocheraForm.get('coordenadas').value) {
+        this.tooltip = true;
+        console.log(this.tooltip);
+      }
+    }, 10000);
   }
 
 
@@ -66,6 +79,7 @@ export class CrearCocheraComponent implements OnInit {
       'empleado': ['59500b99a718c905936ecd88', Validators.required],
       'email': ['ca', [Validators.required, Validators.email], this.forbiddenEmails.bind(this)],
       'username': ['ca', Validators.required, this.forbiddenUsernames.bind(this)],
+      'coordenadas': [null, Validators.required],
       'password1': ['ca', Validators.required],
       'password2': ['ca', Validators.required],
       servicios: this.fb.array([
@@ -75,20 +89,6 @@ export class CrearCocheraComponent implements OnInit {
         })
       ])
     },{validator: this.matchPassword});
-    // this.cocheraForm = new FormGroup({
-    //   'nombre': new FormControl("culo"),
-    //   'direccion': new FormControl("null"),
-    //   'capacidad': new FormControl("null"),
-    //   'telefono': new FormControl("null"),
-    //   'empleado': new FormControl(0),
-    //   'precio': new FormControl("null"),
-    //   'email': new FormControl("null"),
-    //   'username': new FormControl("null"),
-    //   'password1': new FormControl("null"),
-    //   'password2': new FormControl("null"),
-    // });
-
-    
   }
 
   initServicios() {
@@ -203,6 +203,21 @@ export class CrearCocheraComponent implements OnInit {
     }
       
     else return null;
+  }
+
+  handleMapClick(event: {coords: GeoPoint}) {
+    this.marker = new GeoPoint(event.coords.lat, event.coords.lng);
+    console.log(JSON.stringify(event.coords));
+    this.cocheraForm.get('coordenadas').setValue(this.marker);
+    if(this.tooltip) {
+      this.tooltip = false;
+    }
+  }
+
+  resize(event) {
+    setTimeout(()=>{
+      this.map.triggerResize();
+    }, 200);
   }
 
 }

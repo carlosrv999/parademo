@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -46,7 +47,10 @@ import { ServicioComponent } from './servicios/lista-servicios/servicio/servicio
     HttpModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCIeXpTlOyQyjXZlc-G4-vzHCHTwIu5fbA'
+    })
   ],
   providers: [
     CocheraService, 
