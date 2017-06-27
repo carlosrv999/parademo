@@ -6,16 +6,22 @@
     <form [formGroup]="cocheraForm" novalidate (ngSubmit)="onSubmit(cocheraForm)">
       <div class="form-group row">
         <div class="form-group col-md-6">
-          <div class="row">
+          <div class="row" [ngClass]="{ 'has-error' : !cocheraForm.get('nombre').valid && cocheraForm.get('nombre').touched }">
             <label for="inputNombre" class="col-sm-3 col-form-label">Nombre:</label>
             <div class="col-sm-9">
               <input type="text" formControlName="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
+              <span 
+              *ngIf="!cocheraForm.get('nombre').valid && cocheraForm.get('nombre').touched"
+              class="help-block">Ingrese un nombre valido</span>
             </div>
           </div>
-          <div class="row">
+          <div class="row" [ngClass]="{ 'has-error': !cocheraForm.get('direccion').valid && cocheraForm.get('direccion').touched }">
             <label for="inputDireccion" class="col-sm-3 col-form-label">Direccion:</label>
             <div class="col-sm-9">
               <input type="text" formControlName="direccion" class="form-control" id="inputDireccion" placeholder="Direccion">
+              <span 
+              *ngIf="!cocheraForm.get('direccion').valid && cocheraForm.get('direccion').touched"
+              class="help-block">Ingrese una direccion valida</span>
             </div>
           </div>
           <div class="row">
@@ -26,7 +32,7 @@
                 <p>Longitud: </p>
               </div>
               <div class="col-sm-5 pull-right">
-                <button class="btn btn-success btn-lg btn-block">
+                <button type="button" class="btn btn-success btn-lg btn-block">
                   Seleccionar
                 </button>
               </div>
@@ -34,14 +40,20 @@
           </div>
           <div class="row">
             <label for="inputCapacidad" class="col-sm-3 col-form-label">Capacidad:</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="capacidad" class="form-control" id="inputCapacidad" placeholder="Capacidad Maxima">
+            <div class="col-sm-9" [ngClass]="{ 'has-error': !cocheraForm.get('capacidad').valid && cocheraForm.get('capacidad').touched }">
+              <input type="number" formControlName="capacidad" class="form-control" id="inputCapacidad" placeholder="Capacidad Maxima">
+              <span 
+                *ngIf="!cocheraForm.get('capacidad').valid && cocheraForm.get('capacidad').touched"
+                class="help-block">Ingrese la capacidad de la cochera (numero entero)</span>
             </div>
           </div>
           <div class="row">
             <label for="inputTelefono" class="col-sm-3 col-form-label">Telefono:</label>
-            <div class="col-sm-9">
-              <input type="text" formControlName="telefono" class="form-control" id="inputTelefono" placeholder="Telefono">
+            <div class="col-sm-9" [ngClass]="{ 'has-error': !cocheraForm.get('telefono').valid && cocheraForm.get('telefono').touched }">
+              <input type="number" formControlName="telefono" class="form-control" id="inputTelefono" placeholder="Telefono">
+              <span 
+                *ngIf="!cocheraForm.get('telefono').valid && cocheraForm.get('telefono').touched"
+                class="help-block">Ingrese el telefono de la cochera (numero entero)</span>
             </div>
           </div>
           <div class="row">
@@ -53,24 +65,40 @@
               </select>
             </div>
           </div>
-          <div class="row" formArrayName="servicios">
+          <div class="row" [ngClass]="{ 'has-error': !cocheraForm.controls.servicios.controls[0].valid && cocheraForm.controls.servicios.controls[0].touched }" formArrayName="servicios">
             <label for="inputPrecio" class="col-sm-3 col-form-label">Precio de Alquiler:</label>
             <div class="col-sm-9" formGroupName="0">
-              <input type="text" class="form-control" formControlName="precio" id="inputPrecio" placeholder="Precio">
+              <input type="number" class="form-control" formControlName="precio" id="inputPrecio" placeholder="Precio">
+              <span 
+                *ngIf="!cocheraForm.controls.servicios.controls[0].valid && cocheraForm.controls.servicios.controls[0].touched"
+                class="help-block">Ingrese el precio</span>
             </div>
           </div>
         </div>
         <div class="form-group col-md-6">
           <div class="row">
             <label for="inputCorreo" class="col-sm-5 col-form-label">Correo de Recuperacion:</label>
-            <div class="col-sm-7">
+            <div class="col-sm-7" [ngClass]="{ 'has-error': !cocheraForm.get('email').valid && cocheraForm.get('email').touched }">
               <input type="text" formControlName="email" class="form-control" id="inputCorreo" placeholder="Correo">
+              <span 
+                *ngIf="!cocheraForm.get('email').valid && cocheraForm.get('email').touched"
+                class="help-block">
+                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['emailIsForbidden'] : false">Este email esta siendo usado</span>
+                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['required'] : false">Este campo es requerido. </span>
+                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['email'] : false">Ponga un e-mail valido</span>
+              </span>
             </div>
           </div>
           <div class="row">
             <label for="inputUsername" class="col-sm-5 col-form-label">Nombre de Usuario:</label>
-            <div class="col-sm-7">
+            <div class="col-sm-7" [ngClass]="{ 'has-error': !cocheraForm.get('username').valid && cocheraForm.get('username').touched }">
               <input type="text" formControlName="username" class="form-control" id="inputUsername" placeholder="Nombre de Usuario">
+              <span 
+                *ngIf="!cocheraForm.get('username').valid && cocheraForm.get('username').touched"
+                class="help-block">
+                <span *ngIf="cocheraForm.get('username').errors != null ? cocheraForm.get('username').errors['usernameIsForbidden'] : false">This username is already in use!</span>
+                <span *ngIf="cocheraForm.get('username').errors != null ? cocheraForm.get('username').errors['required'] : false">Este campo es requerido. </span>
+              </span>
             </div>
           </div>
           <div class="row">
@@ -87,8 +115,11 @@
           </div>
           <div class="row">
             <label class="col-sm-5 col-form-label">Servicios:</label>
-            <div class="col-sm-7">
+            <div class="col-sm-7" [ngClass]="{ 'has-error': !cocheraForm.get('servicios').valid && cocheraForm.get('servicios').touched }">
               <button type="button" class="btn btn-primary btn-sm btn-block pull-right" (click)="staticModal.show()">Agregar Servicios</button>
+              <span 
+                *ngIf="!cocheraForm.get('servicios').valid && cocheraForm.get('servicios').touched"
+                class="help-block">Ingrese el precio de los servicios!</span>
             </div>
           </div>
           <div class="row">
@@ -126,9 +157,12 @@
                           <div class="col">
                             <label>{{ cocheraForm.controls.servicios.controls[i+1].value.nombre }}</label>
                           </div>
-                          <div class="col">
+                          <div class="col" [ngClass]="{ 'has-error': !cocheraForm.controls.servicios.controls[i+1].valid && cocheraForm.controls.servicios.controls[i+1].touched }">
                             <label>Precio:</label>
                             <input type="text" class="form-control" formControlName="precio">
+                            <span 
+                              *ngIf="!cocheraForm.controls.servicios.controls[i+1].valid && cocheraForm.controls.servicios.controls[i+1].touched"
+                              class="help-block">Ingrese el precio de los servicios!</span>
                           </div>
                         </div>
                       </div>

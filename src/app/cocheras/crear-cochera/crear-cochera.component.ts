@@ -1,3 +1,5 @@
+import { CocheraService } from './../../services/cochera.service';
+import { Observable } from 'rxjs/Observable';
 import { Empleado } from 'app/models/empleado';
 import { EmpleadoService } from 'app/services/empleado.service';
 import { TipoServicioService } from './../../services/tipo-servicio.service';
@@ -6,7 +8,7 @@ import { ServicioService } from './../../services/servicio.service';
 import { Servicio } from './../../models/servicio';
 import { Cochera } from './../../models/cochera';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-cochera',
@@ -23,9 +25,11 @@ export class CrearCocheraComponent implements OnInit {
 
   constructor(private tipoServicioService: TipoServicioService,
               private empleadoService: EmpleadoService,
+              private cocheraService: CocheraService,
               private fb: FormBuilder) { }
 
   ngOnInit() {
+    
     this.createForm();
 
     this.tipoServicioService.getTipoServicios().subscribe(
@@ -57,20 +61,20 @@ export class CrearCocheraComponent implements OnInit {
     this.cocheraForm = this.fb.group({
       'nombre': ['ca', Validators.required],
       'direccion': ['ca', Validators.required],
-      'capacidad': ['ca', Validators.required],
-      'telefono': ['ca', Validators.required],
+      'capacidad': [5, [Validators.required, this.isInteger]],
+      'telefono': ['ca', [Validators.required, this.isInteger]],
       'empleado': ['59500b99a718c905936ecd88', Validators.required],
-      'email': ['ca', Validators.required],
-      'username': ['ca', Validators.required],
+      'email': ['ca', [Validators.required, Validators.email], this.forbiddenEmails.bind(this)],
+      'username': ['ca', Validators.required, this.forbiddenUsernames.bind(this)],
       'password1': ['ca', Validators.required],
       'password2': ['ca', Validators.required],
       servicios: this.fb.array([
         this.fb.group({
-          precio: [5],
+          precio: [5, Validators.required],
           id_servicio: ['594ff7a4a718c905936ecd83']
         })
       ])
-    });
+    },{validator: this.matchPassword});
     // this.cocheraForm = new FormGroup({
     //   'nombre': new FormControl("culo"),
     //   'direccion': new FormControl("null"),
@@ -89,7 +93,7 @@ export class CrearCocheraComponent implements OnInit {
 
   initServicios() {
     return this.fb.group({
-      precio: [''],
+      precio: ['', Validators.required],
       id_servicio: [''],
       nombre: ['']
     });
@@ -111,7 +115,7 @@ export class CrearCocheraComponent implements OnInit {
   addServicio(tipo: TipoServicio) {
     const control = <FormArray>this.cocheraForm.controls['servicios'];
     control.push(this.fb.group({
-      precio : [],
+      precio : [, Validators.required],
       id_servicio : [tipo.id],
       nombre: tipo.nombre
     }));
@@ -134,6 +138,71 @@ export class CrearCocheraComponent implements OnInit {
   }
 
   onShowForm() {
+  }
+
+  forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      this.cocheraService.getEmails().subscribe(
+        (response) => {
+          for(let obj of response) {
+            if(obj.email.trim() == control.value){
+              resolve({'emailIsForbidden': true});
+            }
+          }
+          resolve(null);
+        }
+      );
+    });
+    return promise;
+  }
+
+  forbiddenUsernames(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      this.cocheraService.getEmails().subscribe(
+        (response) => {
+          for(let obj of response) {
+            if(obj.username.trim() == control.value){
+              resolve({'usernameIsForbidden': true});
+            }
+          }
+          resolve(null);
+        }
+      );
+    });
+    return promise;
+  }
+
+  passwordChecker(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        let password1 = this.cocheraForm.get('password1'), password2 = this.cocheraForm.get('password2');
+        console.log(password1.value+'  '+password2.value);
+        if(password1.value !== password2.value) {
+          resolve({'passwordsNotMatch': true});
+        } else {
+          resolve(null);
+        }
+      }, 150);
+    });
+    return promise;
+  }
+
+  matchPassword(AC: AbstractControl) {
+       let password = AC.get('password1').value; // to get value in input tag
+       let confirmPassword = AC.get('password2').value; // to get value in input tag
+        if(password != confirmPassword) {
+            AC.get('password2').setErrors( {MatchPassword: true} )
+        } else {
+            return null;
+        }
+    }
+
+  isInteger(AC: FormControl) {
+    if(!Number.isInteger(AC.value)){
+      return {notInteger: true};
+    }
+      
+    else return null;
   }
 
 }

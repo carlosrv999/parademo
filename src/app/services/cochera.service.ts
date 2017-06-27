@@ -45,5 +45,14 @@ export class CocheraService {
       );
   }
 
+  getEmails() {
+    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'obtenerEmails')
+      .map(
+        (response: Response) => {
+          let responseObj: Array<{username: string, email: string}> = response.json();
+          return responseObj;
+        }
+      );
+  }
 
 }
