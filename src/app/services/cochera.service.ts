@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { EmpleadoService } from 'app/services/empleado.service';
 import { AppUtil } from './../../assets/application-util';
 import { Http, Response } from '@angular/http';
@@ -16,8 +17,8 @@ export class CocheraService {
               private empleadoService: EmpleadoService) {
   }
 
-  getHttpCocheras() {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'getCocheraServEmp')
+  getHttpCocheras(idEmpresa: string) {
+    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'getCocheraServEmpPorEmpresa?idEmpresa='+idEmpresa)
       .map(
         (response: Response) => {
           let responseObj = response.json();
@@ -43,6 +44,67 @@ export class CocheraService {
           return cocheras;
         }
       );
+  }
+
+  postHttpCocheras(form: FormGroup) {
+    if((<string>form.get('empleado').value).length < 3){
+      return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras', 
+        {
+          "id_empresa": form.get('idEmpresa').value,
+          "nombre": form.get('nombre').value,
+          "coordenadas": {
+            "lat": (<GeoPoint>form.get('coordenadas').value).lat,
+            "lng": (<GeoPoint>form.get('coordenadas').value).lng
+          },
+          "direccion": form.get('direccion').value,
+          "telefono": form.get('telefono').value,
+          "estado": true,
+          "capacidad": form.get('capacidad').value,
+          "cupos_disp": form.get('capacidad').value,
+          "username": form.get('username').value,
+          "email": form.get('email').value,
+          "password": form.get('password2').value,
+        }
+      );
+    } else {
+      return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras', 
+        {
+          "id_empresa": form.get('idEmpresa').value,
+          "id_empleado": form.get('empleado').value,
+          "nombre": form.get('nombre').value,
+          "coordenadas": {
+            "lat": (<GeoPoint>form.get('coordenadas').value).lat,
+            "lng": (<GeoPoint>form.get('coordenadas').value).lng
+          },
+          "direccion": form.get('direccion').value,
+          "telefono": form.get('telefono').value,
+          "estado": true,
+          "capacidad": form.get('capacidad').value,
+          "cupos_disp": form.get('capacidad').value,
+          "username": form.get('username').value,
+          "email": form.get('email').value,
+          "password": form.get('password2').value,
+        }
+      );
+    }
+  }
+
+  patchHttpCocheras(form: FormGroup) {
+    return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
+      "id_empleado": form.get('empleado').value,
+      "nombre": "Los Portales Surc",
+      "coordenadas": {
+          "lat": (<GeoPoint>form.get('coordenadas').value).lat,
+          "lng": (<GeoPoint>form.get('coordenadas').value).lng
+      },
+      "direccion": form.get('direccion').value,
+      "telefono": form.get('telefono').value,
+      "estado": form.get('estado').value,
+      "capacidad": form.get('capacidad').value,
+      "cupos_disp": form.get('capacidad').value,
+      "username": form.get('username').value,
+      "email": form.get('email').value,
+    });
   }
 
   getEmails() {

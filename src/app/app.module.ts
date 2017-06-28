@@ -1,3 +1,7 @@
+import { EmpresaService } from './services/empresa.service';
+import { LoginGuard } from './auth/login-guard.service';
+import { AuthGuard } from './auth/auth-guard.service';
+import { AuthModule } from './auth/auth.module';
 import { TipoServicioService } from './services/tipo-servicio.service';
 import { ServicioService } from './services/servicio.service';
 import { EmpleadoService } from 'app/services/empleado.service';
@@ -9,6 +13,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AgmCoreModule } from '@agm/core';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -24,6 +29,9 @@ import { EmpleadoComponent } from './empleados/lista-empleados/empleado/empleado
 import { ListaServiciosComponent } from './servicios/lista-servicios/lista-servicios.component';
 import { CrearServicioComponent } from './servicios/crear-servicio/crear-servicio.component';
 import { ServicioComponent } from './servicios/lista-servicios/servicio/servicio.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthService } from "app/auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -40,7 +48,9 @@ import { ServicioComponent } from './servicios/lista-servicios/servicio/servicio
     EmpleadoComponent,
     ListaServiciosComponent,
     CrearServicioComponent,
-    ServicioComponent
+    ServicioComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -48,15 +58,21 @@ import { ServicioComponent } from './servicios/lista-servicios/servicio/servicio
     ReactiveFormsModule,
     AppRoutingModule,
     ModalModule.forRoot(),
+    BsDropdownModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCIeXpTlOyQyjXZlc-G4-vzHCHTwIu5fbA'
-    })
+    }),
+    AuthModule
   ],
   providers: [
     CocheraService, 
     EmpleadoService, 
     ServicioService,
-    TipoServicioService],
+    TipoServicioService,
+    AuthService,
+    AuthGuard,
+    LoginGuard,
+    EmpresaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

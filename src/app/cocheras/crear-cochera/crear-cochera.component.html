@@ -117,8 +117,14 @@
           </div>
           <div class="row">
             <label for="inputPassword2" class="col-sm-5 col-form-label">Repita su Password:</label>
-            <div class="col-sm-7">
+            <div class="col-sm-7" [ngClass]="{ 'has-error': !cocheraForm.get('password2').valid && cocheraForm.get('password2').touched }">
               <input type="password" formControlName="password2" class="form-control" id="inputPassword2" placeholder="Password">
+              <span 
+                *ngIf="!cocheraForm.get('password2').valid && cocheraForm.get('password2').touched"
+                class="help-block">
+                <span *ngIf="cocheraForm.get('password2').errors != null ? cocheraForm.get('password2').errors['MatchPassword'] : false">Las contrasenas no coinciden</span>
+                <span *ngIf="cocheraForm.get('password2').errors != null ? cocheraForm.get('password2').errors['required'] : false">Este campo es requerido. </span>
+              </span>
             </div>
           </div>
           <div class="row">

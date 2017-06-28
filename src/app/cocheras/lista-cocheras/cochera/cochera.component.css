@@ -68,3 +68,8 @@ input:checked + .slider:before {
 .row {
   margin-bottom: 5px;
 }
+
+agm-map {
+  height: 300px;
+  width: 500px;
+}

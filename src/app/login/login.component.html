@@ -1,0 +1,26 @@
+<section id="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-wrap">
+          <hr>
+          <h1>Iniciar Sesion</h1>
+          <div class="alert alert-success" role="alert" *ngIf="signup"><strong>Exito!</strong> Ya puede iniciar sesion</div>
+          <form [formGroup]="loginForm" id="login-form" >
+            <div class="form-group">
+              <label for="email">Email o nombre de usuario</label>
+              <input type="text" [ngModel]="mymodel" (ngModelChange)="valueChange($event)" formControlName="usrEmail" id="email" class="form-control" placeholder="somebody@example.com">
+            </div>
+            <div class="form-group">
+              <label for="key">Password</label>
+              <input type="password" [(ngModel)]="password" formControlName="password" id="key" class="form-control" placeholder="Password">
+            </div>
+            <button type="submit" [disabled]="!loginForm.valid" id="btn-login" class="btn btn-custom btn-lg btn-block" (click)="onSubmit()">Log in</button>
+          </form>
+          <a routerLink="/signup" class="forget" >No tienes cuenta? Registrate</a>
+          <hr>
+        </div>
+    	</div> <!-- /.col-xs-12 -->
+    </div> <!-- /.row -->
+  </div> <!-- /.container -->
+</section>

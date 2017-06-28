@@ -11,11 +11,10 @@
         <li [routerLinkActive]="['active']"><a style="color: aliceblue;" routerLink="servicios">Servicios</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a style="cursor: pointer;color: aliceblue;" class="dropdown-toggle glyphicon glyphicon-cog" role="button"><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a style="cursor: pointer;">Save Data</a></li>
-            <li><a style="cursor: pointer;">Fetch Data</a></li>
+        <li class="dropdown" dropdown>
+          <a style="cursor: pointer;color: aliceblue;" dropdownToggle class="dropdown-toggle glyphicon glyphicon-cog" role="button"><span class="caret"></span></a>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem"><a class="dropdown-item" (click)="onLogout()">Cerrar Sesion</a></li>
           </ul>
         </li>
       </ul>

@@ -23,14 +23,14 @@
             <label class="col-sm-3 col-form-label">Coordenadas:</label>
             <div class="col-sm-9">
               <div class="col-sm-7 pull-left">
-                <p>Latitud: {{ cochera.geoPoint.lat }}</p>
-                <p>Longitud: {{ cochera.geoPoint.lng }}</p>
+                <p>Latitud: {{ marker1?.lat }} </p>
+                <p>Longitud: {{ marker1?.lng }} </p>
               </div>
               <div class="col-sm-5 pull-right">
-                <button style="margin-top: 5px;" class="btn btn-success btn-xs btn-block">
+                <button style="margin-top: 5px;" class="btn btn-success btn-xs btn-block" (click)="staticModal2.show()">
                   Ver Mapa
                 </button>
-                <button class="btn btn-primary btn-xs btn-block" [disabled]="cocheraForm.disabled">
+                <button class="btn btn-primary btn-xs btn-block" [disabled]="cocheraForm.disabled" (click)="staticModal3.show()">
                   Editar Coordenadas
                 </button>
               </div>
@@ -68,10 +68,29 @@
               <input type="text" formControlName="capacidad" class="form-control" id="inputCapacidad" placeholder="Capacidad">
             </div>
           </div>
-          <div class="row">
+          <div class="row" [ngClass]="{ 'has-error': !cocheraForm.get('username').valid && cocheraForm.get('username').touched }">
             <label for="username" class="col-sm-5 col-form-label">Nombre de Usuario:</label>
             <div class="col-sm-7">
               <input type="text" formControlName="username" class="form-control" id="username" placeholder="Nombre de Usuario">
+              <span 
+                *ngIf="!cocheraForm.get('username').valid && cocheraForm.get('username').touched"
+                class="help-block">
+                <span *ngIf="cocheraForm.get('username').errors != null ? cocheraForm.get('username').errors['usernameIsForbidden'] : false">This username is already in use!</span>
+                <span *ngIf="cocheraForm.get('username').errors != null ? cocheraForm.get('username').errors['required'] : false">Este campo es requerido. </span>
+              </span>
+            </div>
+          </div>
+          <div class="row" [ngClass]="{ 'has-error': !cocheraForm.get('email').valid && cocheraForm.get('email').touched }">
+            <label for="email" class="col-sm-5 col-form-label">Email</label>
+            <div class="col-sm-7">
+              <input type="text" formControlName="email" class="form-control" id="email" placeholder="Email">
+              <span 
+                *ngIf="!cocheraForm.get('email').valid && cocheraForm.get('email').touched"
+                class="help-block">
+                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['emailIsForbidden'] : false">Este email esta siendo usado</span>
+                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['required'] : false">Este campo es requerido. </span>
+                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['email'] : false">Ponga un e-mail valido</span>
+              </span>
             </div>
           </div>
           <div class="row">
@@ -82,36 +101,58 @@
           </div>
           <div class="row" style="margin-top: 20px;">
             <div class="col-md-4 pull-right" *ngIf="cocheraForm.enabled">
-              <button type="button" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-success">Guardar</button>
+              <button type="submit" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-success" (click)="onSubmit()">Guardar</button>
               <button type="button" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-danger" (click)="onCancelar()">Cancelar</button>
             </div>
           </div>
         </div>
       </div>
+      <div class="modal" bsModal #staticModal2="bs-modal" [config]="{backdrop: 'static'}" (onShow)="resize($event)"
+          tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Ver Ubicacion</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal2.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <agm-map #varName [latitude]="lima.lat" [longitude]="lima.lng" [zoom]="11" >
+                  <agm-marker *ngIf="marker1" [latitude]="marker1.lat" [longitude]="marker1.lng"></agm-marker>
+                </agm-map>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="staticModal2.hide()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal" bsModal #staticModal3="bs-modal" [config]="{backdrop: 'static'}" (onShow)="resize2($event)"
+          tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Editar Ubicacion</h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal3.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <agm-map #varName2 [latitude]="lima.lat" [longitude]="lima.lng" [zoom]="11" (mapClick)="handleMapClick($event)" >
+                  <agm-marker *ngIf="marker1" [latitude]="marker1.lat" [longitude]="marker1.lng"></agm-marker>
+                </agm-map>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="staticModal3.hide()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div> 
     </form>
-  </div>
-</div>
-
-<!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
   </div>
 </div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AppUtil } from './../../../assets/application-util';
 import { GeoPoint } from './../../models/geoPoint';
 import { CocheraService } from './../../services/cochera.service';
@@ -34,7 +35,8 @@ export class CrearCocheraComponent implements OnInit {
   constructor(private tipoServicioService: TipoServicioService,
               private empleadoService: EmpleadoService,
               private cocheraService: CocheraService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -52,7 +54,7 @@ export class CrearCocheraComponent implements OnInit {
       }
     );
 
-    this.empleadoService.getHttpEmpleadosPorEmpresa('595007dda718c905936ecd84')
+    this.empleadoService.getHttpEmpleadosPorEmpresa(localStorage.getItem(localStorage.key(0)))
       .subscribe(
         (response) => {
           this.empleados = response;
@@ -72,16 +74,17 @@ export class CrearCocheraComponent implements OnInit {
 
   createForm() {
     this.cocheraForm = this.fb.group({
-      'nombre': ['ca', Validators.required],
-      'direccion': ['ca', Validators.required],
-      'capacidad': [5, [Validators.required, this.isInteger]],
-      'telefono': ['ca', [Validators.required, this.isInteger]],
-      'empleado': ['59500b99a718c905936ecd88', Validators.required],
-      'email': ['ca', [Validators.required, Validators.email], this.forbiddenEmails.bind(this)],
-      'username': ['ca', Validators.required, this.forbiddenUsernames.bind(this)],
+      'nombre': [, Validators.required],
+      'direccion': ['', Validators.required],
+      'capacidad': [, [Validators.required, this.isInteger]],
+      'telefono': ['', [Validators.required, this.isInteger]],
+      'empleado': [],
+      'email': [, [Validators.required, Validators.email], this.forbiddenEmails.bind(this)],
+      'username': [, Validators.required, this.forbiddenUsernames.bind(this)],
       'coordenadas': [null, Validators.required],
-      'password1': ['ca', Validators.required],
-      'password2': ['ca', Validators.required],
+      'password1': [, Validators.required],
+      'password2': [, Validators.required],
+      'idEmpresa':[localStorage.getItem(localStorage.key(0))],
       servicios: this.fb.array([
         this.fb.group({
           precio: [5, Validators.required],
@@ -135,6 +138,14 @@ export class CrearCocheraComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     console.log(this.cocheraForm.value);
+    this.cocheraService.postHttpCocheras(this.cocheraForm).subscribe(
+      (resolve) => {
+        console.log(resolve);
+        //this.router.navigate(['/cocheras'], {queryParams: {exito: true}});
+      }, (error) => {
+        console.log(error);
+      }
+    )
   }
 
   onShowForm() {

@@ -1,3 +1,7 @@
+import { SignupComponent } from './auth/signup/signup.component';
+import { LoginGuard } from './auth/login-guard.service';
+import { AuthGuard } from './auth/auth-guard.service';
+import { LoginComponent } from './login/login.component';
 import { CrearServicioComponent } from './servicios/crear-servicio/crear-servicio.component';
 import { ListaServiciosComponent } from './servicios/lista-servicios/lista-servicios.component';
 import { CrearEmpleadoComponent } from './empleados/crear-empleado/crear-empleado.component';
@@ -12,15 +16,17 @@ import { EmpleadosComponent } from './empleados/empleados.component';
 import { CocherasComponent } from './cocheras/cocheras.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: '/cocheras', pathMatch: 'full' },
-  { path: 'cocheras', component: CocherasComponent, children: [
+  { path: 'login', canActivate: [LoginGuard], component: LoginComponent },
+  { path: 'signup', canActivate: [LoginGuard], component: SignupComponent },
+  { path: 'cocheras', canActivate: [AuthGuard], component: CocherasComponent, children: [
     { path: '', component: ListaCocherasComponent },
     { path: 'crear', component: CrearCocheraComponent },
   ] },
-  { path: 'empleados', component: EmpleadosComponent, children: [
+  { path: 'empleados', canActivate: [AuthGuard], component: EmpleadosComponent, children: [
     { path: '', component: ListaEmpleadosComponent },
     { path: 'crear', component: CrearEmpleadoComponent },
   ] },
-  { path: 'servicios', component: ServiciosComponent, children: [
+  { path: 'servicios', canActivate: [AuthGuard], component: ServiciosComponent, children: [
     { path: '', component: ListaServiciosComponent },
     { path: 'crear', component: CrearServicioComponent },
   ] },

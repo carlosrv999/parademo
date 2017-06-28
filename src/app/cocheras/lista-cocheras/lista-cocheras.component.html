@@ -9,6 +9,7 @@
     </div>
   </div>
   <div class="panel-body">
+    <div class="alert alert-success" role="alert" *ngIf="creado"><strong>Exito!</strong> Cochera creada exitosamente</div>
     <app-cochera
       *ngFor="let cocheraEl of cocheras; let i = index"
       [cochera]="cocheraEl"
