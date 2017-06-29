@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { AppUtil } from './../../../assets/application-util';
 import { GeoPoint } from './../../models/geoPoint';
 import { CocheraService } from './../../services/cochera.service';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +12,7 @@ import { Cochera } from './../../models/cochera';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { AgmMap } from '@agm/core';
+import { AppUtil } from "app/models/application-util";
 
 @Component({
   selector: 'app-crear-cochera',
@@ -146,6 +146,18 @@ export class CrearCocheraComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  check01() {
+    return !(<FormArray>this.cocheraForm.get('servicios')).controls[0].valid && (<FormArray>this.cocheraForm.get('servicios')).controls[0].touched
+  }
+
+  check02() {
+    return !(<FormArray>this.cocheraForm.get('servicios')).controls[0].valid && (<FormArray>this.cocheraForm.get('servicios')).controls[0].touched
+  }
+
+  check03() {
+    return (<FormArray>this.cocheraForm.get('servicios')).controls;
   }
 
   onShowForm() {

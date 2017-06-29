@@ -73,12 +73,12 @@
               </select>
             </div>
           </div>
-          <div class="row" [ngClass]="{ 'has-error': !cocheraForm.controls.servicios.controls[0].valid && cocheraForm.controls.servicios.controls[0].touched }" formArrayName="servicios">
+          <div class="row" [ngClass]="{ 'has-error': check01() }" formArrayName="servicios">
             <label for="inputPrecio" class="col-sm-3 col-form-label">Precio de Alquiler:</label>
             <div class="col-sm-9" formGroupName="0">
               <input type="number" class="form-control" formControlName="precio" id="inputPrecio" placeholder="Precio">
               <span 
-                *ngIf="!cocheraForm.controls.servicios.controls[0].valid && cocheraForm.controls.servicios.controls[0].touched"
+                *ngIf="check02()"
                 class="help-block">Ingrese el precio</span>
             </div>
           </div>
@@ -166,7 +166,7 @@
                     </div>
                     
                     <div class="row" formArrayName="servicios">
-                      <div class="col-sm-6 form-inline" style="margin-left:10px;" *ngFor="let serv of cocheraForm.controls.servicios.controls | slice:1; let i = index">
+                      <div class="col-sm-6 form-inline" style="margin-left:10px;" *ngFor="let serv of check03() | slice:1; let i = index">
                         <div [formGroupName]="i+1">
                           <div class="col">
                             <label>{{ cocheraForm.controls.servicios.controls[i+1].value.nombre }}</label>
@@ -200,8 +200,6 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <!-- this creates a google map on the page with the given lat/lng from -->
-                  <!-- the component as the initial center of the map: -->
                   <div class="container">
                     <agm-map #varName [latitude]="lima.lat" [longitude]="lima.lng" [zoom]="12" (mapClick)="handleMapClick($event)">
                       <agm-marker *ngIf="marker" [latitude]="marker.lat" [longitude]="marker.lng"></agm-marker>

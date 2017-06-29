@@ -1,8 +1,8 @@
 import { Response } from '@angular/http';
 import { Empresa } from './../models/empresa';
-import { AppUtil } from 'assets/application-util';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { AppUtil } from "app/models/application-util";
 @Injectable()
 export class AuthService {
   empresa: Empresa;
@@ -48,7 +48,7 @@ export class AuthService {
     return promise;
   }
 
-  isLoggedInSync(): boolean {
+  public isLoggedInSync(): boolean {
     if(localStorage.key(0)) {
       return true;
     }

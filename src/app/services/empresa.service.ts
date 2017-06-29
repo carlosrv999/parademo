@@ -1,8 +1,8 @@
-import { AppUtil } from 'assets/application-util';
 import { Empresa } from './../models/empresa';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
+import { AppUtil } from "app/models/application-util";
 @Injectable()
 export class EmpresaService {
   constructor(private http: Http) {}

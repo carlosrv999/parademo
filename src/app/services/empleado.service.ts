@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Empleado } from './../models/empleado';
-import { AppUtil } from "assets/application-util";
 import 'rxjs/Rx';
+import { AppUtil } from "app/models/application-util";
 
 @Injectable()
 export class EmpleadoService {
