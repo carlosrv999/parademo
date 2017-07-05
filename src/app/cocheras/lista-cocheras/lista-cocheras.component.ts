@@ -12,6 +12,7 @@ import { Subscription } from "rxjs/Subscription";
   styleUrls: ['./lista-cocheras.component.css']
 })
 export class ListaCocherasComponent implements OnInit, OnDestroy {
+  loading: boolean = true;
   creado: boolean = false;
   cocheras: Cochera[];
   empleados: Empleado[];
@@ -21,20 +22,20 @@ export class ListaCocherasComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.loading = true;
     let obj: {exito: boolean} = <{exito: boolean}>this.route.snapshot.queryParams;
     if(obj.exito) this.creado = true;
-    console.log(localStorage.getItem(localStorage.key(0)));
     const idEmpresa: string = localStorage.getItem(localStorage.key(0));
     this.subscriptionCocheras = this.cocheraService.getHttpCocheras(idEmpresa).subscribe(
       (data: Cochera[]) => {
         this.cocheras = data;
+        this.loading = false;
       }, (error) => {
         console.log(error);
+        this.loading = false;
       }
     );
   }
-
-  
 
   ngOnDestroy() {
     this.subscriptionCocheras.unsubscribe();

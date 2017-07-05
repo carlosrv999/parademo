@@ -91,7 +91,7 @@
               <span 
                 *ngIf="!cocheraForm.get('email').valid && cocheraForm.get('email').touched"
                 class="help-block">
-                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['emailIsForbidden'] : false">Este email esta siendo usado</span>
+                <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['emailIsForbidden'] : false">Este email esta en uso</span>
                 <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['required'] : false">Este campo es requerido. </span>
                 <span *ngIf="cocheraForm.get('email').errors != null ? cocheraForm.get('email').errors['email'] : false">Ponga un e-mail valido</span>
               </span>
@@ -104,7 +104,7 @@
               <span 
                 *ngIf="!cocheraForm.get('username').valid && cocheraForm.get('username').touched"
                 class="help-block">
-                <span *ngIf="cocheraForm.get('username').errors != null ? cocheraForm.get('username').errors['usernameIsForbidden'] : false">This username is already in use!</span>
+                <span *ngIf="cocheraForm.get('username').errors != null ? cocheraForm.get('username').errors['usernameIsForbidden'] : false">El nombre de usuario esta en uso!</span>
                 <span *ngIf="cocheraForm.get('username').errors != null ? cocheraForm.get('username').errors['required'] : false">Este campo es requerido. </span>
               </span>
             </div>

@@ -6,6 +6,7 @@
           <hr>
           <h1>Iniciar Sesion</h1>
           <div class="alert alert-success" role="alert" *ngIf="signup"><strong>Exito!</strong> Ya puede iniciar sesion</div>
+          <div class="alert alert-danger" role="alert" *ngIf="error"><strong>Error!</strong> El nombre de usuario/contraseña son incorrectos</div>
           <form [formGroup]="loginForm" id="login-form" >
             <div class="form-group">
               <label for="email">Email o nombre de usuario</label>

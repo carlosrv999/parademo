@@ -1,3 +1,4 @@
+import { CocheraServicios } from './../models/cochera-servicios';
 import { FormGroup } from '@angular/forms';
 import { EmpleadoService } from 'app/services/empleado.service';
 import { Http, Response } from '@angular/http';
@@ -89,22 +90,49 @@ export class CocheraService {
     }
   }
 
-  patchHttpCocheras(form: FormGroup) {
-    return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
-      "id_empleado": form.get('empleado').value,
-      "nombre": "Los Portales Surc",
-      "coordenadas": {
-          "lat": (<GeoPoint>form.get('coordenadas').value).lat,
-          "lng": (<GeoPoint>form.get('coordenadas').value).lng
-      },
-      "direccion": form.get('direccion').value,
-      "telefono": form.get('telefono').value,
-      "estado": form.get('estado').value,
-      "capacidad": form.get('capacidad').value,
-      "cupos_disp": form.get('capacidad').value,
-      "username": form.get('username').value,
-      "email": form.get('email').value,
-    });
+  patchHttpCocheras(form: FormGroup, cap: boolean) {
+    if(cap) {
+      return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
+        "id_empleado": form.get('empleado').value,
+        "nombre": form.get('nombre').value,
+        "coordenadas": {
+            "lat": (<GeoPoint>form.get('coordenadas').value).lat,
+            "lng": (<GeoPoint>form.get('coordenadas').value).lng
+        },
+        "direccion": form.get('direccion').value,
+        "telefono": form.get('telefono').value,
+        "estado": form.get('estado').value,
+        "capacidad": form.get('capacidad').value,
+        "cupos_disp": form.get('capacidad').value,
+        "username": form.get('username').value,
+        "email": form.get('email').value,
+      });
+    } else {
+      return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
+        "id_empleado": form.get('empleado').value,
+        "nombre": form.get('nombre').value,
+        "coordenadas": {
+            "lat": (<GeoPoint>form.get('coordenadas').value).lat,
+            "lng": (<GeoPoint>form.get('coordenadas').value).lng
+        },
+        "direccion": form.get('direccion').value,
+        "telefono": form.get('telefono').value,
+        "estado": form.get('estado').value,
+        "username": form.get('username').value,
+        "email": form.get('email').value,
+      });
+    }
+  }
+
+  getServiciosCocheras(id: string) {
+    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+AppUtil.COCHERA_API+'/'+id+'?filter[include][servicioCocheras]=tipoServicio')
+      .map(
+        (response: Response) => {
+          let cochera: CocheraServicios = <CocheraServicios>response.json();
+          //console.log(response.json());
+          return cochera.servicioCocheras;
+        }
+      );
   }
 
   getEmails() {

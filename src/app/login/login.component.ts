@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  error: boolean = false;
   signup: boolean = false;
   loginForm: FormGroup;
   isEmail: boolean;
@@ -28,8 +29,8 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.fb.group({
-      'usrEmail': ['ca', Validators.required],
-      'password': ['ca', Validators.required],
+      'usrEmail': [null, Validators.required],
+      'password': [null, Validators.required],
       'isEmail': [false]
     });
   }
@@ -40,19 +41,19 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm);
+    this.error = false;
     this.auth.loginUser(this.loginForm.get('usrEmail').value, this.loginForm.get('password').value, this.loginForm.get('isEmail').value)
       .subscribe((response: {id: string, ttl: number, created: string, userId: string})=> {
-        console.log(response);
         localStorage.setItem(response.id, response.userId);
         this.router.navigate(['/cocheras']);
+      }, (error) => {
+        //console.log(error);
+        this.error = true;
       });
   }
 
   valueChange(newValue) {
-    console.log(this.checkIfEmailInString(newValue));
     this.loginForm.get('isEmail').setValue(this.checkIfEmailInString(newValue));
-    console.log(newValue);
   }
 
 }

@@ -1,3 +1,4 @@
+import { LoadingScreenComponent } from './auth/loading-screen/loading-screen.component';
 import { EmpresaService } from './services/empresa.service';
 import { LoginGuard } from './auth/login-guard.service';
 import { AuthGuard } from './auth/auth-guard.service';
@@ -50,7 +51,8 @@ import { AuthService } from "app/auth/auth.service";
     CrearServicioComponent,
     ServicioComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    LoadingScreenComponent
   ],
   imports: [
     BrowserModule,

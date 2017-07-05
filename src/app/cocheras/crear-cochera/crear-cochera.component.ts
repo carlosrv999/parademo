@@ -33,6 +33,7 @@ export class CrearCocheraComponent implements OnInit {
   cochera: Cochera;
 
   constructor(private tipoServicioService: TipoServicioService,
+              private servicioService: ServicioService,
               private empleadoService: EmpleadoService,
               private cocheraService: CocheraService,
               private fb: FormBuilder,
@@ -137,15 +138,28 @@ export class CrearCocheraComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    console.log(this.cocheraForm.value);
+    console.log(JSON.stringify(this.cocheraForm.get('servicios').value));
     this.cocheraService.postHttpCocheras(this.cocheraForm).subscribe(
       (resolve) => {
         console.log(resolve);
-        //this.router.navigate(['/cocheras'], {queryParams: {exito: true}});
+        let nuevaCochera = <Cochera>resolve.json();
+        let arrayServ: Array<{id_servicio: string, precio: number}> = <Array<{id_servicio: string, precio: number}>>this.cocheraForm.get('servicios').value;
+        for(let serv of arrayServ) {
+          this.servicioService.postServicios(nuevaCochera.id, {id_servicio: serv.id_servicio, precio: serv.precio})
+            .subscribe(
+              (response) => {
+                console.log(response);
+              }, (error) => {
+                console.log(error);
+              }
+            )
+        }
+        this.router.navigate(['/cocheras'], {queryParams: {exito: true}});
       }, (error) => {
         console.log(error);
       }
-    )
+    );
+
   }
 
   check01() {

@@ -1,31 +1,37 @@
+import { ServicioCochera } from 'app/models/servicio-cochera';
+import { AppUtil } from 'app/models/application-util';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Servicio } from './../models/servicio';
+import 'rxjs/Rx';
 
 @Injectable()
 export class ServicioService {
-  private servicios: Servicio[] = [
-    new Servicio('1', '1', '1', 5, true, 'Alquiler de Cupo'),
-    new Servicio('2', '1', '1', 6, true, 'Lavado de Autos'),
-    new Servicio('3', '1', '1', 7, true, 'Encerado de Autos'),
-  ];
-
-  getServicio(id: string): Servicio {
-    for (let servicio of this.servicios) {
-      if (servicio.id == id) {
-        return servicio;
-      }
-    }
-    return null;
-  }
 
   constructor(private http: Http) {}
 
   getServiciosPorCochera(id: string) {
-    return this.http.get('http://localhost:3000/serviciosPorCochera?idCochera='+id);
+    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/serviciosPorCochera?idCochera='+id);
   }
 
-  getServicios(): Servicio[] {
-    return this.servicios;
+  postServicios(id: string, obj: {id_servicio: string, precio: number}) {
+    return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/servicioCocheras', {
+      "id_cochera": id,
+      "id_servicio" : obj.id_servicio,
+      "precio_hora" : obj.precio,
+      "estado" : true,
+    });
+  }
+
+  patchHttpServicio(servicio: ServicioCochera) {
+    return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/servicioCocheras/'+servicio.id, {
+      "precio_hora": servicio.precio_hora
+    }).map(
+      (response: Response) => {
+        let nuevoServ: ServicioCochera = <ServicioCochera>response.json();
+        console.log(response.json());
+        return nuevoServ;
+      }
+    );
   }
 }

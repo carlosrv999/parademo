@@ -1,8 +1,10 @@
+import { Empleado } from 'app/models/empleado';
 import { Empresa } from './../models/empresa';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 import { AppUtil } from "app/models/application-util";
+import { Cochera } from "app/models/cochera";
 @Injectable()
 export class EmpresaService {
   constructor(private http: Http) {}
@@ -16,6 +18,26 @@ export class EmpresaService {
         "email": empresa.email,
         "password": password
       });
+  }
+
+  getHttpEmpleadosEmpresa(id: string) {
+    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas/'+id+'?filter[include]=empleados')
+      .map(
+        (response: Response) => {
+          let empleados: Empleado[] = response.json().empleados;
+          return empleados;
+        }
+      );
+  }
+
+  getHttpCocherasEmpresa(id: string) {
+    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas/'+id+'?filter[include]=cocheras')
+      .map(
+        (response: Response) => {
+          let cocheras: Cochera[] = response.json().cocheras;
+          return cocheras;
+        }
+      );
   }
 
   getEmails() {

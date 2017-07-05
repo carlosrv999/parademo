@@ -1,8 +1,78 @@
 <div class="panel panel-primary">
-  <div class="panel-heading">
-    <h4>{{ empleado.nombres }} {{ empleado.apellido_pat }} {{ empleado.apellido_mat }}</h4>
+  <div class="panel-heading clearfix">
+    <h4 class="panel-title pull-left" style="padding-top: 7.5px;">{{ empleado.nombres }} {{ empleado.apellido_pat }} {{ empleado.apellido_mat }}</h4>
+    <button type="button" class="btn btn-success pull-right" (click)="onEditMode()">Editar Empleado</button>
   </div>
   <div class="panel-body">
-
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label for="inputNombres" class="col-sm-3 col-form-label">Nombres:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="nombres" class="form-control" id="inputNombres" placeholder="Nombres">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputApPat" class="col-sm-3 col-form-label">Apellido Paterno:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="apellido_pat" class="form-control" id="inputApPat" placeholder="Apellido Paterno">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputApMat" class="col-sm-3 col-form-label">Apellido Materno:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="apellido_mat" class="form-control" id="inputApMat" placeholder="Apellido Materno">
+            </div>
+          </div>
+          <div class="row">
+            <label for="dni" class="col-sm-3 col-form-label">DNI:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="dni" class="form-control" id="dni" placeholder="DNI">
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label for="telefono" class="col-sm-3 col-form-label">Telefono:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="telefono" class="form-control" id="telefono" placeholder="Telefono">
+            </div>
+          </div>
+          <div class="row">
+            <label for="cargo" class="col-sm-3 col-form-label">Cargo:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="cargo" class="form-control" id="cargo" placeholder="Cargo">
+            </div>
+          </div>
+          <div class="row">
+            <label for="salario" class="col-sm-3 col-form-label">Salario:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="salario" class="form-control" id="salario" placeholder="Salario">
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputCochera" class="col-sm-3 col-form-label">Cochera donde labora:</label>
+            <div class="col-sm-9">
+              <select id="inputCochera" formControlName="id_cochera" class="form-control">
+                <option value="0">Seleccionar</option>
+                <option *ngFor="let cochera of cocheras" [ngValue]="cochera.id">{{ cochera.nombre }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-md-12">
+            <div class="col-md-4" *ngIf="noModificado">
+              <div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><strong> Error!</strong> No ha modificado los campos!</div>              
+            </div>
+            <div class="col-md-3 pull-right" *ngIf="editMode">
+              <button type="submit" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-success" [disabled]="loading"><i *ngIf="loading" class="fa fa-refresh fa-spin"></i> Guardar</button>
+              <button type="button" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-danger" (click)="onCancelar()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

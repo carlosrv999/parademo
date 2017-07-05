@@ -104,7 +104,6 @@ export class CocheraComponent implements OnInit, OnChanges {
         (response) => {
           this.empleados = response.json();
           this.marker1 = this.cochera.geoPoint;
-          console.log(this.cochera);
         }, (error) => {
           this.empleados = [];
         }
@@ -135,16 +134,20 @@ export class CocheraComponent implements OnInit, OnChanges {
 
   handleMapClick(event: {coords: GeoPoint}) {
     this.marker1 = new GeoPoint(event.coords.lat, event.coords.lng);
-    console.log(JSON.stringify(event.coords));
     this.cocheraForm.get('coordenadas').setValue(this.marker1);
   }
 
   onSubmit() {
-    console.log(this.cocheraForm);
-    this.cocheraService.patchHttpCocheras(this.cocheraForm)
+    let cap: boolean;
+    if(this.cochera.capacidad == this.cocheraForm.get('capacidad').value) cap = false;
+    else cap = true;
+    this.cocheraService.patchHttpCocheras(this.cocheraForm, cap)
       .subscribe(
         (response) => {
-          console.log(response);
+          let newCochera = <Cochera>response.json();
+          this.cochera.nombre = newCochera.nombre;
+          this.cochera.capacidad = newCochera.capacidad;
+          this.cochera.telefono = newCochera.telefono;
           this.onEditMode();
         }, (error) => {
           console.log(error);

@@ -3,6 +3,96 @@
     <h4>Nuevo Empleado</h4>
   </div>
   <div class="panel-body">
-
+    <form [formGroup]="form" novalidate (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <div class="form-group col-md-6">
+          <div class="row" [ngClass]="{ 'has-error' : !form.get('nombres').valid && form.get('nombres').touched }">
+            <label for="inputNombres" class="col-sm-3 col-form-label">Nombres:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="nombres" class="form-control" id="inputNombres" placeholder="Nombres">
+              <span 
+              *ngIf="!form.get('nombres').valid && form.get('nombres').touched"
+              class="help-block">Ingrese un nombre valido</span>
+            </div>
+          </div>
+          <div class="row" [ngClass]="{ 'has-error' : !form.get('apellido_pat').valid && form.get('apellido_pat').touched }">
+            <label for="inputApPat" class="col-sm-3 col-form-label">Apellido Paterno:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="apellido_pat" class="form-control" id="inputApPat" placeholder="Apellido Paterno">
+              <span 
+              *ngIf="!form.get('apellido_pat').valid && form.get('apellido_pat').touched"
+              class="help-block">Ingrese un apellido valido</span>
+            </div>
+          </div>
+          <div class="row" [ngClass]="{ 'has-error' : !form.get('apellido_mat').valid && form.get('apellido_mat').touched }">
+            <label for="inputApMat" class="col-sm-3 col-form-label">Apellido Materno:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="apellido_mat" class="form-control" id="inputApMat" placeholder="Apellido Paterno">
+              <span 
+              *ngIf="!form.get('apellido_mat').valid && form.get('apellido_mat').touched"
+              class="help-block">Ingrese un apellido valido</span>
+            </div>
+          </div>
+          <div class="row" [ngClass]="{ 'has-error' : !form.get('dni').valid && form.get('dni').touched }">
+            <label for="dni" class="col-sm-3 col-form-label">DNI:</label>
+            <div class="col-sm-9">
+              <input type="number" formControlName="dni" class="form-control" id="dni" placeholder="Apellido Paterno">
+              <span 
+              *ngIf="!form.get('dni').valid && form.get('dni').touched"
+              class="help-block">Ingrese un DNI valido</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="row" [ngClass]="{ 'has-error' : !form.get('telefono').valid && form.get('telefono').touched }">
+            <label for="inpuTelefono" class="col-sm-3 col-form-label">Telefono:</label>
+            <div class="col-sm-9">
+              <input type="number" formControlName="telefono" class="form-control" id="inpuTelefono" placeholder="Telefono">
+              <span 
+              *ngIf="!form.get('telefono').valid && form.get('telefono').touched"
+              class="help-block">Ingrese un telefono valido</span>
+            </div>
+          </div>
+          <div class="row" [ngClass]="{ 'has-error' : !form.get('cargo').valid && form.get('cargo').touched }">
+            <label for="inputCargo" class="col-sm-3 col-form-label">Cargo:</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="cargo" class="form-control" id="inputCargo" placeholder="Cargo">
+              <span 
+              *ngIf="!form.get('cargo').valid && form.get('cargo').touched"
+              class="help-block">Ingrese un cargo valido</span>
+            </div>
+          </div>
+          <div class="row" [ngClass]="{ 'has-error' : !form.get('salario').valid && form.get('salario').touched }">
+            <label for="inputSalario" class="col-sm-3 col-form-label">Salario:</label>
+            <div class="col-sm-9">
+              <input type="number" formControlName="salario" class="form-control" id="inputSalario" placeholder="Salario">
+              <span 
+              *ngIf="!form.get('salario').valid && form.get('salario').touched"
+              class="help-block">Ingrese un salario valido</span>
+            </div>
+          </div>
+          <div class="row">
+            <label for="inputCochera" class="col-sm-3 col-form-label">Cochera donde labora:</label>
+            <div class="col-sm-9">
+              <select id="inputCochera" formControlName="id_cochera" class="form-control">
+                <option [value]="'0'">Seleccionar</option>
+                <option *ngFor="let cochera of cocheras" [ngValue]="cochera.id">{{ cochera.nombre }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-md-12">
+            <div class="col-md-4" *ngIf="error">
+              <div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><strong> Error!</strong> Llene todos los campos!</div>              
+            </div>
+            <div class="col-md-3 pull-right">
+              <button type="submit" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-success" [disabled]="loading"><i *ngIf="loading" class="fa fa-refresh fa-spin"></i> Guardar</button>
+              <button type="button" style="margin-bottom: 5px;" class="btn btn-lg btn-block btn-danger" [routerLink]="'/empleados'">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
