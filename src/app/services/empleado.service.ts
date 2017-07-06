@@ -13,11 +13,13 @@ export class EmpleadoService {
   }
 
   getHttpEmpleado(id: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+AppUtil.EMPLEADO_API+"/"+id);
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/'+AppUtil.EMPLEADO_API+"/"+id);
+    /*return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+AppUtil.EMPLEADO_API+"/"+id);*/
   }
 
   getHttpEmpleadosPorEmpresa(idEmpresa: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'empleadosPorEmpresa?idEmpresa='+idEmpresa)
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/'+'empleadosPorEmpresa?idEmpresa='+idEmpresa)
+    /*return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'empleadosPorEmpresa?idEmpresa='+idEmpresa)*/
       .map(
         (response: Response) => {
           let objs = response.json();
@@ -27,11 +29,13 @@ export class EmpleadoService {
   }
 
   getHttpEmpleadosPorCochera(idCochera: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'getEmpleadosPorCochera?idCochera='+idCochera);
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/'+'getEmpleadosPorCochera?idCochera='+idCochera);
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'getEmpleadosPorCochera?idCochera='+idCochera);
   }
 
   postHttpEmpleado(empleado: Empleado) {
-    return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/empleados', {
+    return this.http.post(AppUtil.HTTPS+AppUtil.IP+'/'+'api/empleados', {
+    //return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/empleados', {
       "id_empresa": empleado.id_empresa,
       "id_cochera": empleado.id_cochera,
       "nombres": empleado.nombres,
@@ -46,7 +50,8 @@ export class EmpleadoService {
   }
 
   patchHttpEmpleado(id: string, empleado :Empleado) {
-    return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/empleados/'+id, {
+    return this.http.patch(AppUtil.HTTPS+AppUtil.IP+'/'+'api/empleados/'+id, {
+    //return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/empleados/'+id, {
       "nombres": empleado.nombres,
       "apellido_pat": empleado.apellido_pat,
       "apellido_mat": empleado.apellido_mat,

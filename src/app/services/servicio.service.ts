@@ -11,11 +11,13 @@ export class ServicioService {
   constructor(private http: Http) {}
 
   getServiciosPorCochera(id: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/serviciosPorCochera?idCochera='+id);
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/serviciosPorCochera?idCochera='+id);
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/serviciosPorCochera?idCochera='+id);
   }
 
   postServicios(id: string, obj: {id_servicio: string, precio: number}) {
-    return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/servicioCocheras', {
+    return this.http.post(AppUtil.HTTPS+AppUtil.IP+'/api/servicioCocheras', {
+    //return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/servicioCocheras', {
       "id_cochera": id,
       "id_servicio" : obj.id_servicio,
       "precio_hora" : obj.precio,
@@ -24,7 +26,8 @@ export class ServicioService {
   }
 
   patchHttpServicio(servicio: ServicioCochera) {
-    return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/servicioCocheras/'+servicio.id, {
+    return this.http.patch(AppUtil.HTTPS+AppUtil.IP+'/api/servicioCocheras/'+servicio.id, {
+    //return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/servicioCocheras/'+servicio.id, {
       "precio_hora": servicio.precio_hora
     }).map(
       (response: Response) => {

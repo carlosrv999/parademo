@@ -16,7 +16,7 @@
               <label for="key">Password</label>
               <input type="password" formControlName="password" id="key" class="form-control" placeholder="Password">
             </div>
-            <button type="submit" [disabled]="!loginForm.valid" id="btn-login" class="btn btn-custom btn-lg btn-block" (click)="onSubmit()">Log in</button>
+            <button type="submit" [disabled]="loading" id="btn-login" class="btn btn-custom btn-lg btn-block" (click)="onSubmit()"><i *ngIf="loading" class="fa fa-refresh fa-spin"></i>Log in</button>
           </form>
           <a routerLink="/signup" class="forget" >No tienes cuenta? Registrate</a>
           <hr>

@@ -19,7 +19,8 @@ export class CocheraService {
   }
 
   getHttpCocheras(idEmpresa: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'getCocheraServEmpPorEmpresa?idEmpresa='+idEmpresa)
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/'+'getCocheraServEmpPorEmpresa?idEmpresa='+idEmpresa)
+    /*return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'getCocheraServEmpPorEmpresa?idEmpresa='+idEmpresa)*/
       .map(
         (response: Response) => {
           let responseObj = response.json();
@@ -49,7 +50,8 @@ export class CocheraService {
 
   postHttpCocheras(form: FormGroup) {
     if((<string>form.get('empleado').value).length < 3){
-      return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras', 
+      return this.http.post(AppUtil.HTTPS+AppUtil.IP+'/'+'api/cocheras', 
+      //return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras', 
         {
           "id_empresa": form.get('idEmpresa').value,
           "nombre": form.get('nombre').value,
@@ -68,7 +70,8 @@ export class CocheraService {
         }
       );
     } else {
-      return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras', 
+      return this.http.post(AppUtil.HTTPS+AppUtil.IP+'/'+'api/cocheras', 
+      //return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras', 
         {
           "id_empresa": form.get('idEmpresa').value,
           "id_empleado": form.get('empleado').value,
@@ -92,7 +95,8 @@ export class CocheraService {
 
   patchHttpCocheras(form: FormGroup, cap: boolean) {
     if(cap) {
-      return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
+      return this.http.patch(AppUtil.HTTPS+AppUtil.IP+'/'+'api/cocheras/'+form.get('id').value, {
+      //return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
         "id_empleado": form.get('empleado').value,
         "nombre": form.get('nombre').value,
         "coordenadas": {
@@ -108,7 +112,8 @@ export class CocheraService {
         "email": form.get('email').value,
       });
     } else {
-      return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
+      return this.http.patch(AppUtil.HTTPS+AppUtil.IP+'/'+'api/cocheras/'+form.get('id').value, {
+      //return this.http.patch(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'api/cocheras/'+form.get('id').value, {
         "id_empleado": form.get('empleado').value,
         "nombre": form.get('nombre').value,
         "coordenadas": {
@@ -125,7 +130,8 @@ export class CocheraService {
   }
 
   getServiciosCocheras(id: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+AppUtil.COCHERA_API+'/'+id+'?filter[include][servicioCocheras]=tipoServicio')
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/'+AppUtil.COCHERA_API+'/'+id+'?filter[include][servicioCocheras]=tipoServicio')
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+AppUtil.COCHERA_API+'/'+id+'?filter[include][servicioCocheras]=tipoServicio')
       .map(
         (response: Response) => {
           let cochera: CocheraServicios = <CocheraServicios>response.json();
@@ -136,7 +142,8 @@ export class CocheraService {
   }
 
   getEmails() {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'obtenerEmails')
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/'+'obtenerEmails')
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'obtenerEmails')
       .map(
         (response: Response) => {
           let responseObj: Array<{username: string, email: string}> = response.json();

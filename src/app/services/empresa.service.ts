@@ -10,7 +10,8 @@ export class EmpresaService {
   constructor(private http: Http) {}
 
   crearEmpresa(empresa: Empresa, password: string) {
-    return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas', {
+    return this.http.post(AppUtil.HTTPS+AppUtil.IP+'/api/empresas', {
+    //return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas', {
         "razon_social": empresa.razon_social,
         "telefono": empresa.telefono,
         "direccion": empresa.direccion,
@@ -21,7 +22,8 @@ export class EmpresaService {
   }
 
   getHttpEmpleadosEmpresa(id: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas/'+id+'?filter[include]=empleados')
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/api/empresas/'+id+'?filter[include]=empleados')
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas/'+id+'?filter[include]=empleados')
       .map(
         (response: Response) => {
           let empleados: Empleado[] = response.json().empleados;
@@ -31,7 +33,8 @@ export class EmpresaService {
   }
 
   getHttpCocherasEmpresa(id: string) {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas/'+id+'?filter[include]=cocheras')
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/api/empresas/'+id+'?filter[include]=cocheras')
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/api/empresas/'+id+'?filter[include]=cocheras')
       .map(
         (response: Response) => {
           let cocheras: Cochera[] = response.json().cocheras;
@@ -41,7 +44,8 @@ export class EmpresaService {
   }
 
   getEmails() {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'obtenerEmailsEmpresa')
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+'/'+'obtenerEmailsEmpresa')
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+'/'+'obtenerEmailsEmpresa')
       .map(
         (response: Response) => {
           let responseObj: Array<{username: string, email: string}> = response.json();

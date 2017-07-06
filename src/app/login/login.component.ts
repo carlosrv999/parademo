@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  loading: boolean = false;
   error: boolean = false;
   signup: boolean = false;
   loginForm: FormGroup;
@@ -41,12 +42,15 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.error = false;
     this.auth.loginUser(this.loginForm.get('usrEmail').value, this.loginForm.get('password').value, this.loginForm.get('isEmail').value)
       .subscribe((response: {id: string, ttl: number, created: string, userId: string})=> {
+        this.loading = false;
         localStorage.setItem(response.id, response.userId);
         this.router.navigate(['/cocheras']);
       }, (error) => {
+        this.loading = false;
         //console.log(error);
         this.error = true;
       });

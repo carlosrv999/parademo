@@ -1,0 +1,40 @@
+[debug] [2017-07-06T17:06:40.793Z] ----------------------------------------------------------------------
+[debug] [2017-07-06T17:06:40.797Z] Command:      C:\Program Files\nodejs\node.exe C:\Users\CARLO\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy --debug
+[debug] [2017-07-06T17:06:40.798Z] CLI Version:  3.9.1
+[debug] [2017-07-06T17:06:40.798Z] Platform:     win32
+[debug] [2017-07-06T17:06:40.799Z] Node Version: v7.10.0
+[debug] [2017-07-06T17:06:40.799Z] Time:         Thu Jul 06 2017 12:06:40 GMT-0500 (SA Pacific Standard Time)
+[debug] [2017-07-06T17:06:40.799Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-07-06T17:06:40.814Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-07-06T17:06:40.816Z] > authorizing via signed-in user
+[debug] [2017-07-06T17:06:40.819Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/cocheras-ng  
+ Thu Jul 06 2017 12:06:40 GMT-0500 (SA Pacific Standard Time)
+[debug] [2017-07-06T17:06:42.019Z] <<< HTTP RESPONSE 200
+[debug] [2017-07-06T17:06:42.023Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/cocheras-ng/tokens  
+ Thu Jul 06 2017 12:06:42 GMT-0500 (SA Pacific Standard Time)
+[debug] [2017-07-06T17:06:43.088Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'cocheras-ng'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[debug] [2017-07-06T17:06:45.657Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/cocheras-ng/uploads/-KoNrYoRWkR80kVBZIZW?fileCount=19&message=  
+ Thu Jul 06 2017 12:06:45 GMT-0500 (SA Pacific Standard Time)
+[debug] [2017-07-06T17:06:50.950Z] <<< HTTP RESPONSE 200
+[debug] [2017-07-06T17:06:50.955Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] +  hosting: 19 files uploaded successfully
+[info] i  starting release process (may take several minutes)...
+[debug] [2017-07-06T17:06:58.337Z] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/cocheras-ng/releases { hosting: 
+   { public: 'dist',
+     rewrites: [ [Object] ],
+     version: '-KoNrYoRWkR80kVBZIZW',
+     prefix: '-KoNrYoRWkR80kVBZIZW/',
+     manifest: [] } } 
+ Thu Jul 06 2017 12:06:58 GMT-0500 (SA Pacific Standard Time)
+[debug] [2017-07-06T17:06:59.207Z] <<< HTTP RESPONSE 200
+[info] 
+[info] +  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/cocheras-ng/overview
+[info] Hosting URL: https://cocheras-ng.firebaseapp.com

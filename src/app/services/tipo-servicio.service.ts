@@ -10,7 +10,8 @@ export class TipoServicioService {
   constructor(private http: Http) {}
 
   getTipoServicios() {
-    return this.http.get(AppUtil.HTTP+AppUtil.IP+":"+AppUtil.PORT+"/api/tipoServicios")
+    return this.http.get(AppUtil.HTTPS+AppUtil.IP+"/api/tipoServicios")
+    //return this.http.get(AppUtil.HTTP+AppUtil.IP+":"+AppUtil.PORT+"/api/tipoServicios")
       .map(
         (response: Response) => {
           let objs: TipoServicio[] = response.json();
