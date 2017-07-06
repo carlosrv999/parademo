@@ -11,14 +11,14 @@ export class AuthService {
 
   loginUser(emailOrUsername: string, password: string, isEmail: boolean) {
     if(isEmail) {
-      return this.http.post('http://'+AppUtil.IP+':'+AppUtil.PORT+"/api/empresas/login", {
+      return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+"/api/empresas/login", {
         "email" : emailOrUsername,
         "password" : password
       }).map((response: Response) => {
         return response.json();
       });
     } else {
-      return this.http.post('http://'+AppUtil.IP+':'+AppUtil.PORT+"/api/empresas/login", {
+      return this.http.post(AppUtil.HTTP+AppUtil.IP+':'+AppUtil.PORT+"/api/empresas/login", {
         "username" : emailOrUsername,
         "password" : password
       }).map((response: Response) => {
