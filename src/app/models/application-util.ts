@@ -7,8 +7,8 @@ if (this.hostname.indexOf(':') > 0) {
 }
 // Add a port or a subdomain to get the API url:
 
-this.apiUrl = 'http://' + this.hostname + ':8080';
-const urlBase = this.hostname;
+this.apiUrl = 'http://' + "200.121.128.66" + ':3000';
+const urlBase = "200.121.128.66";
 
 export class AppUtil {
   public static HTTP: string = 'http://';
